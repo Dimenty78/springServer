@@ -63,7 +63,7 @@ public class GreetingController {
 
     //----------------------------------------------------------------------------------- РАДИО СЕРВИС
     @GetMapping("/rd")                      // Запросы от программы
-            public String rd(
+    public String rd(
             @RequestParam(name="zapros", required=false, defaultValue="zapros") String zapros,
             Map<String, Object> model
     ) {
@@ -100,7 +100,7 @@ public class GreetingController {
         return "selo";
     }
 
-//----------------------------------------------------------------------------------- НАЧАЛЬНАЯ СТРАНИЦА
+    //----------------------------------------------------------------------------------- НАЧАЛЬНАЯ СТРАНИЦА
     @GetMapping
     public String main(Map<String, Object> model) {
         //model.put("some", "Сдесь скоро будет сайт... а может и не будет... а может и не скоро... а может и не сайт...");

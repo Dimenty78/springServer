@@ -1,77 +1,54 @@
 package com.example.sweater;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
-@RestController
+@Controller
 public class FileController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
+    String fileName;
+    File dir, uploadedFile;
+    BufferedOutputStream stream;
 
-    @Autowired
-    private FileStorageService fileStorageService;
+    String downloadFolderPath = "d:\\Temp\\+\\";
 
-    @PostMapping("/uploadFile")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+    @RequestMapping(value = "/uploadMultipleFiles", method = RequestMethod.POST)
+    @ResponseBody
+    public void uploadFile(@RequestParam("files") MultipartFile[] files) {
+        fileName = null;
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                try {
 
-        String fileName = fileStorageService.storeFile(file);
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path(fileName)
-                .toUriString();
+                    dir = new File(downloadFolderPath);
+                    if (!dir.exists()) {
+                        dir.mkdirs();
+                    }
 
-        System.out.println(fileName);
+                    byte[] bytes = file.getBytes();
+                    fileName = file.getOriginalFilename();
+                    uploadedFile = new File(dir.getAbsolutePath() + File.separator + fileName);
+                    stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+                    stream.write(bytes);
+                    stream.flush();
+                    stream.close();
 
-        System.out.println(fileDownloadUri);
+                    System.out.println("Успешно передан файл: " + fileName);
 
-        return new UploadFileResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize());
-    }
-
-    @PostMapping("/uploadMultipleFiles")
-    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-        return Arrays.asList(files)
-                .stream()
-                .map(file -> uploadFile(file))
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/downloadFile/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-        // Load file as Resource
-        Resource resource = fileStorageService.loadFileAsResource(fileName);
-
-        // Try to determine file's content type
-        String contentType = null;
-        try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            logger.info("Could not determine file type.");
+                } catch (Exception e) {
+                    System.out.println("Не передан файл " + fileName + " => " + e.getMessage());
+                }
+            } else {
+                System.out.println("Вы не смогли передать файл  " + fileName + " потому что файл был пуст");
+            }
         }
-
-        // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
-            contentType = "application/octet-stream";
-        }
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
     }
-
 }
