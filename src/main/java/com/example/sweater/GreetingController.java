@@ -3,6 +3,7 @@ package com.example.sweater;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -98,6 +99,17 @@ public class GreetingController {
         XStarterRazbor.XStarter(data);
         model.put("xStart", "OK");
         return "selo";
+    }
+    @GetMapping("/selojava")                    //
+    public String selojava(
+            @RequestParam(name="data", required=false, defaultValue="nool") String data,
+            Map<String, Object> model
+    ) {
+        model.put("selojava", "OK");
+        String dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_S").format( new Date());
+        String dateFormat2 = new SimpleDateFormat("yyyy_MM_dd").format( new Date());
+        ReadWrite.writeFile("\\\\Multicast\\(z) arhiv\\АРХИВ\\ЛОГИ\\!_JavaClient\\" + dateFormat2 + ".log", dateFormat +" > " + data + "\r\n" + ReadWrite.readfile("\\\\Multicast\\(z) arhiv\\АРХИВ\\ЛОГИ\\!_JavaClient\\" + dateFormat2 + ".log"));
+        return "selojava";
     }
 
     //----------------------------------------------------------------------------------- НАЧАЛЬНАЯ СТРАНИЦА

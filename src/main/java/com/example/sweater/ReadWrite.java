@@ -23,12 +23,12 @@ public class ReadWrite {
     }
 
     //Запись текста в файла
-    public static void writeFile(String a , String b ){
+    public static void writeFile(String patchAndName , String textForWrite ){
 
         try
         {
-            BufferedWriter bw =  new BufferedWriter(new OutputStreamWriter(new FileOutputStream(a), "Windows-1251"));
-            bw.write(b);
+            BufferedWriter bw =  new BufferedWriter(new OutputStreamWriter(new FileOutputStream(patchAndName), "Windows-1251"));
+            bw.write(textForWrite);
             bw.flush();
             bw.close();
         }
@@ -39,6 +39,21 @@ public class ReadWrite {
 
     //Удаление файлов через ентер
     public static void delDirFile(String a){
+
+        String delFile [] = a.split(System.lineSeparator());
+        for (int d = 0; d < delFile.length; d++) {
+
+            final File file = new File(delFile[d]);
+            if(file.delete()) {
+
+            } else {
+                System.out.println("Файл удалить не получилось");
+            }
+        }
+    }
+
+    //Удаление файлов через ентер
+    public static void pastFileDirToDir(String a){
 
         String delFile [] = a.split(System.lineSeparator());
         for (int d = 0; d < delFile.length; d++) {
