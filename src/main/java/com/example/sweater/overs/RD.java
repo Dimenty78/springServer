@@ -1,4 +1,7 @@
-package com.example.sweater;
+package com.example.sweater.overs;
+
+import com.example.sweater.overs.ReadWrite;
+import com.example.sweater.overs.mp3LineLog;
 
 import java.util.ArrayList;
 
@@ -11,7 +14,7 @@ public class RD {
         String id = zapros.split("_")[0];
         String deistvie = zapros.split("_")[1];
 
-        //Поиск по логу 2х2
+        // Поиск по логу 2х2
         if (deistvie.contains("log2x2")){
 
             ArrayList<mp3LineLog> mp3Line = new ArrayList<mp3LineLog>();
@@ -36,7 +39,7 @@ public class RD {
             file = file + mes + "\\";
             file = file + data.split("-")[0] + "_" + mes + "_" + data.split("-")[2] + ".log";
 
-            //ЧИТАЕМ ФАЙЛ ЛОГА
+            // ЧИТАЕМ ФАЙЛ ЛОГА
             String textLog = ReadWrite.readfile (file);
 
             String Path[] = textLog.split("Path=");

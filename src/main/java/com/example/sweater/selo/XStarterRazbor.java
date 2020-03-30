@@ -1,4 +1,6 @@
-package com.example.sweater;
+package com.example.sweater.selo;
+
+import com.example.sweater.overs.ReadWrite;
 
 public class XStarterRazbor {
 
@@ -10,6 +12,6 @@ public class XStarterRazbor {
                 ReadWrite.writeFile ("\\\\Multicast\\(z) arhiv\\АРХИВ\\ЛОГИ\\РаботаАвтоматики_Проверка\\" + data.split("_")[1] + ".test",data.split("_")[3]);
             }
         }
-        System.out.println(data);
+        //System.out.println(data);
     }
 }

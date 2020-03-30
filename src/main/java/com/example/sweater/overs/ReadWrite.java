@@ -1,4 +1,4 @@
-package com.example.sweater;
+package com.example.sweater.overs;
 
 import java.io.*;
 
@@ -17,7 +17,7 @@ public class ReadWrite {
             }
             br.close();
         }catch (IOException e){
-            return "error";
+            return "";
         }
         return text;
     }
