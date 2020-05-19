@@ -3,9 +3,44 @@
 <body>
 
 <div class="iv-embed" style="margin-left: 0px;padding:0;border:0;width:1026px;"><div class="iv-v" style="display:block;margin:0;padding:1px;border:0;background:#000;"><iframe class="iv-i" style="display:block;margin:0;padding:0;border:0;" src="https://open.ivideon.com/embed/v2/?server=100-SapO82oDcIW1Z8b7pnjG5l&amp;camera=0&amp;width=&amp;height=&amp;lang=ru" width="1024" height="512" frameborder="0" allowfullscreen></iframe></div><div class="iv-b" style="display:block;margin:0;padding:0;border:0;"><div style="float:right;text-align:right;padding:0 0 10px;line-height:10px;"><a class="iv-a" style="font:10px Verdana,sans-serif;color:inherit;opacity:.6;" href="https://www.ivideon.com/" target="_blank">Powered by Ivideon</a></div><div style="clear:both;height:0;overflow:hidden;">&nbsp;</div><script src="https://open.ivideon.com/embed/v2/embedded.js"></script></div></div>
-<br><a style="font-size:2em"; href="https://drive.google.com/folderview?id=15Pk98XKQdzldddPfs3ID7t81pQyUs5XP">ЗДЕСЬ НАХОДИТСЯ АРХИВ ВИДЕОЗАПИСЕЙ КАМЕРЫ</a></div>
+<br><a style="font-size:2em"; href="https://drive.google.com/open?id=17QsSOFtNnJRQ_8MO-8XpgCyJ9Nc6vpD2">ЗДЕСЬ НАХОДИТСЯ АРХИВ ВИДЕОЗАПИСЕЙ КАМЕРЫ</a></div>
 </br></br></br>
 <div style="font-size:1.5em">{{{some}}}</div>
+
+<style>
+    html, body {
+    }
+    .block {
+        width: 1024px; /* Ширина */
+        box-sizing: border-box; /* Алгоритм подсчёта размеров */
+    }
+</style>
+
+<div class="block">
+
+<canvas id="myChart"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+<script>
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [{{{labelsTempForGraphik}}}],
+            datasets: [{
+                label: "ТЕМПЕРАТУРА АККУМУЛЯТОРА КАМЕРЫ ЗА {{{datasTempForGraphik}}}",
+                pointRadius: 2,
+                //backgroundColor: ['red', 'yellow', 'green'],
+                borderColor: 'rgb(67, 145, 204)',
+                data: [{{{dataTempForGraphik}}}],
+            }]
+        },
+        options: {}
+    });
+
+</script>
+</div>
+
 
 </body>
 </html>

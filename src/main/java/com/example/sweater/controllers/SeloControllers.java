@@ -30,7 +30,7 @@ public class SeloControllers {
     ArrayList<ObjectAlarm> objectAlarms = new ArrayList<>();
     ArrayList<ObjectAlarm> objectAlarmsDelete = new ArrayList<>();
 
-    ArrayList<ObjectList> objectLists = ListObjectsStart(path1);
+    ArrayList<ObjectList> objectLists = ListObjectsStart();
 
     ArrayList<ObjectRebut> objectRebut = ObjectRebutStart();
     ArrayList<ObjectTeamwiewer> objectTeamwiewer = ObjectTeamwiewerStart();
@@ -122,10 +122,11 @@ public class SeloControllers {
                     objectRebut = new ArrayList<>();
                     objectTeamwiewer = new ArrayList<>();
                     objectMishkas = new ArrayList<>();
-                    objectLists = ListObjectsStart(path1);
+                    objectLists = ListObjectsStart();
                     objectRebut = ObjectRebutStart();
                     objectTeamwiewer = ObjectTeamwiewerStart();
                     objectMishkas = ObjectMishkaStart();
+                    System.out.println(">" + path1 + "АРХИВ\\ЛОГИ\\!_JavaClient\\Tishina\\<");
                     model.put("selojava", "OK");
                     break;
                 case "alarmNoolDel":
@@ -225,8 +226,8 @@ public class SeloControllers {
     }
 
     // Восстанавливаем объекты при старте сервера
-    public ArrayList<ObjectList> ListObjectsStart(String path1) {
-        System.out.println(">" + path1 + "АРХИВ\\ЛОГИ\\!_JavaClient\\Tishina\\<");
+    public ArrayList<ObjectList> ListObjectsStart() {
+        System.out.println(path1);
         ArrayList<ObjectList> objectLists = new ArrayList<>();
         readFileObjectList = ReadWrite.readfile("\\\\Multicast\\(z) arhiv\\АРХИВ\\ЛОГИ\\!_JavaClient\\Tishina\\" + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".log");
         if (readFileObjectList.length() != 0) {

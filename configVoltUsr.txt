@@ -1,0 +1,2 @@
+buferSize=40
+buferMinus=12
